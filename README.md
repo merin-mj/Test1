@@ -7,7 +7,5 @@ http://localhost:8080/reg -> display registration form
 http://localhost:8080/getdetails -> get details of a person using username
 
 
-dependecies are specified in pom.xml
 
-db connection details are specified in application.properties
 
