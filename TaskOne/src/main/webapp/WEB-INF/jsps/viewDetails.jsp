@@ -4,20 +4,14 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Search</title>
 </head>
 <body>
-
-<!--  
-Name: ${name} <br>
-Age: ${age} <br>
-User name: ${username} <br>
-dob: ${dob} <br>
-Gender : ${gender} <br>
--->
+<h3>Enter username to search: </h3>
 	<form action="getdetails" method="post">
 		User Name:<input type="text" name="uname"/><br><br>
 		<input type="submit" value="search"/><br><br>
+		${msg}<br>
 	</form>
 </body>
 </html>

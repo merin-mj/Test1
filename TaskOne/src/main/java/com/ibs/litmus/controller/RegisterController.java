@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ibs.litmus.model.Person;
+import com.ibs.litmus.myexceptions.PasswordLengthException;
 import com.ibs.litmus.repository.PersonRepo;
 
 
@@ -34,9 +35,18 @@ public class RegisterController {
 	
 	@RequestMapping("/regSubmit")
 	public ModelAndView details(Person person){
-		personRepo.save(person);
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("index");
+		try {
+			if(person.getPassword().length()<7) {
+				throw new PasswordLengthException("Password must have atleast 6 characters");
+			}
+			personRepo.save(person);
+			mv.setViewName("index");
+		}catch(PasswordLengthException e) {
+			System.out.println("An exception occured "+ e.getMessage());
+			mv.setViewName("register");
+			mv.addObject("errorMsg",e.getMessage());
+		}
 		return mv;
 	}
 	
@@ -53,7 +63,14 @@ public class RegisterController {
 	public ModelAndView getDetails(@RequestParam String uname){
 		ModelAndView mv = new ModelAndView("getDetails");
 		Person person = personRepo.findById(uname).orElse(null);
-		mv.addObject(person);
+		if(person!=null) {
+			//mv.addObject("msg","retreived succesfully");
+			mv.addObject(person);
+		}
+		else {
+			mv.addObject("msg","No details found");
+			mv.setViewName("viewDetails");
+		}
 		return mv;
 	}
 	

@@ -12,6 +12,7 @@
 		Age:<input type="number" name="age"/><br><br>
 		Username:<input type="text" name="username"/><br><br>
 		Password:<input type="password" name="password"/><br><br>
+		${errorMsg}<br>
 		Date Of Birth:<input type="date" name="dob"/><br><br>
 		Gender:
 		<input type="radio"  name="gender" value="male">Male</input>
