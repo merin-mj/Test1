@@ -10,9 +10,11 @@
 	<form action="regSubmit" method="post">
 		Name:<input type="text" name="name"/><br><br>
 		Age:<input type="number" name="age"/><br><br>
+		${ageErrorMsg}<br>
 		Username:<input type="text" name="username"/><br><br>
+		${usernameErrorMsg}<br>
 		Password:<input type="password" name="password"/><br><br>
-		${errorMsg}<br>
+		${passwordErrorMsg}<br>
 		Date Of Birth:<input type="date" name="dob"/><br><br>
 		Gender:
 		<input type="radio"  name="gender" value="male">Male</input>

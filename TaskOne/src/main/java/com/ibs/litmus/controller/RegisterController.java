@@ -1,7 +1,8 @@
 package com.ibs.litmus.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -9,12 +10,15 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ibs.litmus.model.Person;
-import com.ibs.litmus.myexceptions.PasswordLengthException;
+import com.ibs.litmus.myexceptions.AgeException;
+import com.ibs.litmus.myexceptions.PasswordException;
+import com.ibs.litmus.myexceptions.UsernameException;
 import com.ibs.litmus.repository.PersonRepo;
 
 
 @RestController
 public class RegisterController {
+	Logger log = LoggerFactory.getLogger( RegisterController.class);
 	
 	@Autowired
 	PersonRepo personRepo;
@@ -36,16 +40,45 @@ public class RegisterController {
 	@RequestMapping("/regSubmit")
 	public ModelAndView details(Person person){
 		ModelAndView mv = new ModelAndView();
+		//log.debug("username= {}",person.getUsername());
 		try {
-			if(person.getPassword().length()<7) {
-				throw new PasswordLengthException("Password must have atleast 6 characters");
+			if(person.getUsername().equals("")) {
+				log.warn("user havn't entered a username-violates username cannot be empty criteria");
+				throw new UsernameException("Username field cannot be left blank");
 			}
+			if(person.getPassword().length()<7) {
+				log.warn("provided password is not upto stds-dont hv min length");
+				throw new PasswordException("Password must have atleast 6 characters");
+			}
+			if(person.getAge()<18) {
+				log.warn("user doesnt meets min age criteria, entered {}",person.getAge());
+				throw new AgeException("The person must be atleast 18 years old");
+			}
+			if(person.getAge()>100) {
+				log.warn("user age violates age criteria, entered {}",person.getAge());
+				throw new AgeException("The person must be atmost 100 years old");
+			}
+			if(personRepo.findById(person.getUsername())!=null) {
+				log.warn("username entered violates unique username criteria,entered username {} olrdy exists",person.getUsername());
+				throw new UsernameException("Username is already taken");
+			}
+			log.debug("saving details to db for {} with username {} ",person.getName(),person.getUsername());
 			personRepo.save(person);
+			log.info("details saved to db");
 			mv.setViewName("index");
-		}catch(PasswordLengthException e) {
-			System.out.println("An exception occured "+ e.getMessage());
+		}catch(PasswordException e) {
+			System.out.println("An exception occured:: "+ e.getMessage());
 			mv.setViewName("register");
-			mv.addObject("errorMsg",e.getMessage());
+			mv.addObject("passwordErrorMsg",e.getMessage());
+		} catch (AgeException e) {
+			//e.printStackTrace();
+			System.out.println("An exception occured:: "+ e.getMessage());
+			mv.setViewName("register");
+			mv.addObject("ageErrorMsg",e.getMessage());
+		} catch (UsernameException e) {
+			System.out.println("An exception occured:: "+ e.getMessage());
+			mv.setViewName("register");
+			mv.addObject("usernameErrorMsg",e.getMessage());
 		}
 		return mv;
 	}
@@ -63,11 +96,14 @@ public class RegisterController {
 	public ModelAndView getDetails(@RequestParam String uname){
 		ModelAndView mv = new ModelAndView("getDetails");
 		Person person = personRepo.findById(uname).orElse(null);
+		log.debug("searching in db with entered username {}",uname);
 		if(person!=null) {
 			//mv.addObject("msg","retreived succesfully");
+			log.info("person with username {} is found and details are returned",person.getUsername());
 			mv.addObject(person);
 		}
 		else {
+			log.info("searched username {} is not found in db",uname);
 			mv.addObject("msg","No details found");
 			mv.setViewName("viewDetails");
 		}
