@@ -46,7 +46,7 @@ public class RegisterController {
 				log.warn("user havn't entered a username-violates username cannot be empty criteria");
 				throw new UsernameException("Username field cannot be left blank");
 			}
-			if(person.getPassword().length()<7) {
+			if(person.getPassword().length()<6) {
 				log.warn("provided password is not upto stds-dont hv min length");
 				throw new PasswordException("Password must have atleast 6 characters");
 			}
@@ -58,7 +58,7 @@ public class RegisterController {
 				log.warn("user age violates age criteria, entered {}",person.getAge());
 				throw new AgeException("The person must be atmost 100 years old");
 			}
-			if(personRepo.findById(person.getUsername())!=null) {
+			if(personRepo.findById(person.getUsername()).orElse(null)!=null) {
 				log.warn("username entered violates unique username criteria,entered username {} olrdy exists",person.getUsername());
 				throw new UsernameException("Username is already taken");
 			}
