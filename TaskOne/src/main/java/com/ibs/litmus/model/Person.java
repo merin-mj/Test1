@@ -10,12 +10,24 @@ public class Person {
 	@Id
 	private String username;
 	private int age;
+	public Person() {
+
+	}
 	private String name;
 	private String dob;
 	private String gender;
 	private String password;
 	public int getAge() {
 		return age;
+	}
+	public Person(String username, int age, String name, String dob, String gender, String password) {
+		super();
+		this.username = username;
+		this.age = age;
+		this.name = name;
+		this.dob = dob;
+		this.gender = gender;
+		this.password = password;
 	}
 	public void setAge(int age) {
 		this.age = age;

@@ -4,8 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -14,6 +16,7 @@ import com.ibs.litmus.myexceptions.AgeException;
 import com.ibs.litmus.myexceptions.PasswordException;
 import com.ibs.litmus.myexceptions.UsernameException;
 import com.ibs.litmus.repository.PersonRepo;
+
 
 
 @RestController
@@ -37,10 +40,11 @@ public class RegisterController {
 		return mv;
 	}
 
-	@RequestMapping("/regSubmit")
-	public ModelAndView details(Person person){
+	@RequestMapping(value="/regSubmit",produces={"application/*","text/html"},consumes={"application/*"})
+	@ResponseBody
+	public ModelAndView details(@RequestBody Person person) throws PasswordException{
 		ModelAndView mv = new ModelAndView();
-		//log.debug("username= {}",person.getUsername());
+		log.debug("in rcontroller,password: {}",person.getPassword());
 		try {
 			if(person.getUsername().equals("")) {
 				log.warn("user havn't entered a username-violates username cannot be empty criteria");
@@ -66,11 +70,13 @@ public class RegisterController {
 			personRepo.save(person);
 			log.info("details saved to db");
 			mv.setViewName("index");
-		}catch(PasswordException e) {
-			System.out.println("An exception occured:: "+ e.getMessage());
-			mv.setViewName("register");
-			mv.addObject("passwordErrorMsg",e.getMessage());
-		} catch (AgeException e) {
+		}
+//		catch(PasswordException e) {
+//			System.out.println("An exception occured:: "+ e.getMessage());
+//			mv.setViewName("register");
+//			mv.addObject("passwordErrorMsg",e.getMessage());
+//		} 
+		catch (AgeException e) {
 			//e.printStackTrace();
 			System.out.println("An exception occured:: "+ e.getMessage());
 			mv.setViewName("register");
@@ -83,7 +89,7 @@ public class RegisterController {
 		return mv;
 	}
 	
-	
+
 	@RequestMapping("/getdetails")
 	public ModelAndView getDetails(){
 		ModelAndView mv = new ModelAndView();
