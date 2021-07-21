@@ -7,12 +7,14 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="regSubmit" method="post">
+	<form action="regSubmit" method="post" id="my-form">
 		Name:<input type="text" name="name"/><br><br>
 		Age:<input type="number" name="age"/><br><br>
+		${ageErrorMsg}<br>
 		Username:<input type="text" name="username"/><br><br>
+		${usernameErrorMsg}<br>
 		Password:<input type="password" name="password"/><br><br>
-		${errorMsg}<br>
+		${passwordErrorMsg}<br>
 		Date Of Birth:<input type="date" name="dob"/><br><br>
 		Gender:
 		<input type="radio"  name="gender" value="male">Male</input>
@@ -20,5 +22,18 @@
 		<input type="radio"  name="gender" value="others">Others</input><br><br>
 		<input type="submit" value="submit"/><br><br>
 	</form>
+	<script>
+	var person = JSON.stringify($("#my-form").serializeArray());
+
+	</script>
+	<!-- <script src="./js/toJson.js" type="text/javascript">
+	$.ajax({
+	  type: "POST",
+	  url: "serverUrl",
+	  data: person,
+	  success: function(){},
+	  dataType: "json",
+	  contentType : "application/json"
+	});</script> -->
 </body>
 </html>
