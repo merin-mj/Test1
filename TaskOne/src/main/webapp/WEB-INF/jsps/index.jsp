@@ -4,10 +4,13 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Home</title>
 </head>
 <body>
-<a href ="reg">registration form</a>
-<a href ="getdetails">search</a>
+	<h1>Home page</h1>
+	<a href ="reg">registration form</a><br>
+	<a href ="getdetails">search</a><br>
+	<a href ="login">login</a><br>
+
 </body>
 </html>
