@@ -9,14 +9,17 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.web.servlet.ModelAndView;
-
+import org.mockito.junit.jupiter.MockitoExtension;
 import com.ibs.litmus.model.Person;
 import com.ibs.litmus.myexceptions.PasswordException;
 import com.ibs.litmus.repository.PersonRepo;
+
+@ExtendWith(MockitoExtension.class)//annotn instd of openMocks
 class RegisterControllerTest {
 
 	@InjectMocks
@@ -24,11 +27,13 @@ class RegisterControllerTest {
 	
 	
 	@Mock
-    PersonRepo repo;
+    	PersonRepo repo;
 	Person p ;
 	@BeforeEach
 	public void setup() {
 		MockitoAnnotations.initMocks(this);
+		//MockitoAnnotations.initMocks(this);//jupiter 2-deprecated in jupiter 3 use openMocks or annotn
+		//MockitoAnnotations.openMocks(this);
 		p = new Person("testUserName", 50, "testName", "1971", "male", "password");
 		System.out.println("Inside setup");
 	}
