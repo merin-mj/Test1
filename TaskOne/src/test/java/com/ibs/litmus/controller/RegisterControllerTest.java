@@ -9,27 +9,17 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-<<<<<<< HEAD
-=======
 import org.junit.jupiter.api.extension.ExtendWith;
->>>>>>> 1fb1f2f (search functionality modified using Streams api methods)
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.web.servlet.ModelAndView;
-<<<<<<< HEAD
-=======
 import org.mockito.junit.jupiter.MockitoExtension;
->>>>>>> 1fb1f2f (search functionality modified using Streams api methods)
-
 import com.ibs.litmus.model.Person;
 import com.ibs.litmus.myexceptions.PasswordException;
 import com.ibs.litmus.repository.PersonRepo;
-<<<<<<< HEAD
-=======
 
 @ExtendWith(MockitoExtension.class)//annotn instd of openMocks
->>>>>>> 1fb1f2f (search functionality modified using Streams api methods)
 class RegisterControllerTest {
 
 	@InjectMocks
@@ -37,16 +27,13 @@ class RegisterControllerTest {
 	
 	
 	@Mock
-    PersonRepo repo;
+    	PersonRepo repo;
 	Person p ;
 	@BeforeEach
 	public void setup() {
-<<<<<<< HEAD
 		MockitoAnnotations.initMocks(this);
-=======
 		//MockitoAnnotations.initMocks(this);//jupiter 2-deprecated in jupiter 3 use openMocks or annotn
 		//MockitoAnnotations.openMocks(this);
->>>>>>> 1fb1f2f (search functionality modified using Streams api methods)
 		p = new Person("testUserName", 50, "testName", "1971", "male", "password");
 		System.out.println("Inside setup");
 	}
