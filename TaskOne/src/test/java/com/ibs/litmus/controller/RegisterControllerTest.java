@@ -1,59 +1,29 @@
-package com.ibs.litmus.controller;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doReturn;
-
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.web.servlet.ModelAndView;
 import org.mockito.junit.jupiter.MockitoExtension;
-<<<<<<< HEAD
-=======
 
->>>>>>> 10216d3 (--)
 import com.ibs.litmus.model.Person;
 import com.ibs.litmus.myexceptions.PasswordException;
 import com.ibs.litmus.repository.PersonRepo;
 
 @ExtendWith(MockitoExtension.class)//annotn instd of openMocks
 class RegisterControllerTest {
-
 	@InjectMocks
 	RegisterController rc;
-	
-	
 	@Mock
-<<<<<<< HEAD
     	PersonRepo repo;
 	Person p ;
 	@BeforeEach
 	public void setup() {
-		MockitoAnnotations.initMocks(this);
-=======
-    PersonRepo repo;
-	Person p ;
-	@BeforeEach
-	public void setup() {
->>>>>>> 10216d3 (--)
 		//MockitoAnnotations.initMocks(this);//jupiter 2-deprecated in jupiter 3 use openMocks or annotn
 		//MockitoAnnotations.openMocks(this);
 		p = new Person("testUserName", 50, "testName", "1971", "male", "password");
 		System.out.println("Inside setup");
 	}
-
 	@AfterEach
 	public void cleanup() {
 		System.out.println("Inside cleanup");
 	}
-
 	@Test
 	@DisplayName("save to db-pw lenth>6")
 	void passwordTest1() throws PasswordException {
@@ -63,7 +33,6 @@ class RegisterControllerTest {
 		//ModelAndView mv = rc.details(p);
 		assertEquals(8, p.getPassword().length(), "password length is greater than 6::criteria satisfied");
 	}
-
 	@Test
 	@DisplayName("save to db-pw length=6")
 	void passwordTest2() throws PasswordException {
@@ -72,7 +41,6 @@ class RegisterControllerTest {
 		rc.details(p);
 		assertEquals(6, p.getPassword().length(), "password length is 6::criteria satisfied");
 	}
-
 	@Test
 	@DisplayName("dnt save to db,throw exceptn-pw length<6")
 	void passwordTest3() {
@@ -80,7 +48,6 @@ class RegisterControllerTest {
 		assertThrows(Exception.class, () -> rc.details(p),
 				"password length is less than 6::criteria violation,throws exception");
 	}
-
 }
 /*
 class RegisterControllerTest {
@@ -107,4 +74,3 @@ class RegisterControllerTest {
 	}
 }
 */
-
