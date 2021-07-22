@@ -15,6 +15,10 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.web.servlet.ModelAndView;
 import org.mockito.junit.jupiter.MockitoExtension;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 10216d3 (--)
 import com.ibs.litmus.model.Person;
 import com.ibs.litmus.myexceptions.PasswordException;
 import com.ibs.litmus.repository.PersonRepo;
@@ -27,11 +31,18 @@ class RegisterControllerTest {
 	
 	
 	@Mock
+<<<<<<< HEAD
     	PersonRepo repo;
 	Person p ;
 	@BeforeEach
 	public void setup() {
 		MockitoAnnotations.initMocks(this);
+=======
+    PersonRepo repo;
+	Person p ;
+	@BeforeEach
+	public void setup() {
+>>>>>>> 10216d3 (--)
 		//MockitoAnnotations.initMocks(this);//jupiter 2-deprecated in jupiter 3 use openMocks or annotn
 		//MockitoAnnotations.openMocks(this);
 		p = new Person("testUserName", 50, "testName", "1971", "male", "password");
