@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ibs.litmus.model.Person;
 import com.ibs.litmus.repository.PersonRepo;
-import com.sun.tools.sjavac.Log;
+//import com.sun.tools.sjavac.Log;
 
 @RestController
 public class LoginController {
