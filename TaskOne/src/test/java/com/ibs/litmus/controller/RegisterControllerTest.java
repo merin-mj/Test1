@@ -15,16 +15,15 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+
 import com.ibs.litmus.model.Person;
 import com.ibs.litmus.myexceptions.PasswordException;
 import com.ibs.litmus.repository.PersonRepo;
 
 @ExtendWith(MockitoExtension.class)//annotn instd of openMocks
 class RegisterControllerTest {
-
 	@InjectMocks
 	RegisterController rc;
-	
 	@Mock
 	PersonRepo repo;
 	Person p ;
@@ -35,12 +34,10 @@ class RegisterControllerTest {
 		p = new Person("testUserName", 50, "testName", "1971", "male", "password");
 		System.out.println("Inside setup");
 	}
-
 	@AfterEach
 	public void cleanup() {
 		System.out.println("Inside cleanup");
 	}
-
 	@Test
 	@DisplayName("save to db-pw lenth>6")
 	void passwordTest1() throws PasswordException {
@@ -50,7 +47,6 @@ class RegisterControllerTest {
 		//ModelAndView mv = rc.details(p);
 		assertEquals(8, p.getPassword().length(), "password length is greater than 6::criteria satisfied");
 	}
-
 	@Test
 	@DisplayName("save to db-pw length=6")
 	void passwordTest2() throws PasswordException {
@@ -59,7 +55,6 @@ class RegisterControllerTest {
 		rc.details(p);
 		assertEquals(6, p.getPassword().length(), "password length is 6::criteria satisfied");
 	}
-
 	@Test
 	@DisplayName("dnt save to db,throw exceptn-pw length<6")
 	void passwordTest3() {
@@ -67,7 +62,6 @@ class RegisterControllerTest {
 		assertThrows(Exception.class, () -> rc.details(p),
 				"password length is less than 6::criteria violation,throws exception");
 	}
-
 }
 /*
 //************
@@ -95,4 +89,3 @@ class RegisterControllerTest {
 	}
 }
 */
-
