@@ -1,6 +1,8 @@
 package com.ibs.litmus.controller;
+
 import java.util.List;
 import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +25,7 @@ import com.ibs.litmus.repository.PersonRepo;
 @RestController
 public class RegisterController {
 	Logger log = LoggerFactory.getLogger( RegisterController.class);
-	
+
 	@Autowired
 	PersonRepo personRepo;
 
@@ -32,7 +34,7 @@ public class RegisterController {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("index");
 		return mv;
-	}	
+	}
 
 	@RequestMapping("/reg")
 	public ModelAndView register() {
@@ -69,15 +71,6 @@ public class RegisterController {
 				log.warn("username entered violates unique username criteria,entered username {} olrdy exists",person.getUsername());
 				throw new UsernameException("Username is already taken");
 			}
-			}
-			if(person.getAge()>100) {
-				log.warn("user age violates age criteria, entered {}",person.getAge());
-				throw new AgeException("The person must be atmost 100 years old");
-			}
-			if(personRepo.findById(person.getUsername()).orElse(null)!=null) {
-				log.warn("username entered violates unique username criteria,entered username {} olrdy exists",person.getUsername());
-				throw new UsernameException("Username is already taken");
-			}
 			log.debug("saving details to db for {} with username {} ",person.getName(),person.getUsername());
 			personRepo.save(person);
 			log.info("details saved to db");
@@ -87,15 +80,10 @@ public class RegisterController {
 //			System.out.println("An exception occured:: "+ e.getMessage());
 //			mv.setViewName("register");
 //			mv.addObject("passwordErrorMsg",e.getMessage());
-//		} 
+//		}
 		catch (AgeException e) {
 			//e.printStackTrace();
 			System.out.println("An exception occured:: "+ e.getMessage());
-			mv.setViewName("register");
-			mv.addObject("ageErrorMsg",e.getMessage());
-		} catch (UsernameException e) {
-			System.out.println("An exception occured:: "+ e.getMessage());
-			mv.setViewName("register");
 			mv.setViewName("register");
 			mv.addObject("ageErrorMsg",e.getMessage());
 		} catch (UsernameException e) {
@@ -112,20 +100,18 @@ public class RegisterController {
 		mv.setViewName("viewDetails");
 		return mv;
 	}
-	
+
 	@PostMapping("/getdetails")
 	public ModelAndView getDetails(@RequestParam String uname){
 		Person person;
 		ModelAndView mv = new ModelAndView("getDetails");
-		Person person = personRepo.findById(uname).orElse(null);
-		log.debug("searching in db with entered username {}",uname);
-		if(person!=null) {
+//fetch all data from db into list,search in it
 		List <Person> personList = (List<Person>) personRepo.findAll();
 		//personList.forEach(x->System.out.println(x.getName()+" "+x.getUsername()+" "+x.getAge()+" "+x.getGender()+"\n"));
 		Optional<Person> matchingPerson = personList
 				.stream()
 				.filter(p -> p.getUsername().equals(uname))
-			    .findFirst(); //findAny();
+				.findFirst(); //findAny();
 		log.debug("searching in list fetched from db with entered username {}",uname);
 		if(matchingPerson.isPresent()){//true if value is present
 			person = matchingPerson.get(); //returns the value if present else NoSuchElementException
@@ -141,7 +127,7 @@ public class RegisterController {
 		}
 		return mv;
 	}
-	
+//fetch searched data alone from db
 //	    Person person = personRepo.findById(uname).orElse(null);
 //		if(person!=null) {
 //			//mv.addObject("msg","retreived succesfully");
@@ -155,8 +141,8 @@ public class RegisterController {
 //		}
 //		return mv;
 //	}
-//	
-	
+//
+
 	/*
 	@PostMapping("/regSubmit")
 	public ModelAndView viewDetails(@RequestParam("name") String name,@RequestParam("age") int age,@RequestParam("username") String username,@RequestParam("password") String password,@RequestParam("dob") String dob,@RequestParam("gender") String gender,ModelMap modelMap){

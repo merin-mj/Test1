@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 
+import com.ibs.litmus.controller.RegisterController;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -13,7 +14,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.web.servlet.ModelAndView;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.ibs.litmus.model.Person;
@@ -25,7 +25,7 @@ class RegisterControllerTest {
 	@InjectMocks
 	RegisterController rc;
 	@Mock
-    	PersonRepo repo;
+	PersonRepo repo;
 	Person p ;
 	@BeforeEach
 	public void setup() {
@@ -64,10 +64,11 @@ class RegisterControllerTest {
 	}
 }
 /*
+//************
 class RegisterControllerTest {
-	Person person=new Person("testUserName", 50, "testName", "1971", "male", "password");
+	Person person=new kotlin.com.ibs.litmus.model.Person("testUserName", 50, "testName", "1971", "male", "password");
 	@InjectMocks
-	RegisterController controller;
+	kotlin.com.ibs.litmus.controller.RegisterController controller;
 	
 	@Mock
 	PersonRepo repo;
@@ -81,10 +82,10 @@ class RegisterControllerTest {
 	@DisplayName("save to db-pw lenth>6")
 	public void shouldSaveValidPassword1() throws PasswordException {
 		//ModelAndView mv = new ModelAndView();
-		doReturn(person).when(repo).save(any(Person.class));
+		doReturn(person).when(repo).save(any(kotlin.com.ibs.litmus.model.Person.class));
 		controller.details(person);
 		assertEquals(8, person.getPassword().length(), "password length is greater than 6::criteria satisfied");
-		verify(repo,times(1)).save(any(Person.class));
+		verify(repo,times(1)).save(any(kotlin.com.ibs.litmus.model.Person.class));
 	}
 }
 */
